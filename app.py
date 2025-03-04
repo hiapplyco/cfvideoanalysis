@@ -71,9 +71,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ------------------------------
-# Header - Simplified - CrossFit Focused
+# Header - Using custom image instead of logo
 # ------------------------------
-st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/CrossFit_Logo_Solid.svg/1200px-CrossFit_Logo_Solid.svg.png", width=150) # CrossFit logo
+st.image("image_fx_ (19).jpg", width=250)  # Using the custom image instead of CrossFit logo
 st.title("CrossFit Form Analyzer")
 st.markdown("Get expert AI feedback on your CrossFit workout technique.") # Clear subtitle as CTA
 
@@ -131,9 +131,6 @@ if 'show_audio_options' not in st.session_state:
 # Main UI - Streamlined Landing and Video Analysis - CrossFit focused
 # ------------------------------
 st.write(" ") # Adding some whitespace
-
-# Hero Section Image - Added here
-st.image("image_fx_ (19).jpg", use_column_width=True) # Hero Image
 
 st.write("Upload a video of your CrossFit workout to get started.") # More direct instruction
 
