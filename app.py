@@ -81,7 +81,6 @@ st.markdown("Get expert AI feedback on your CrossFit workout technique.") # Clea
 # Sidebar content - Kept, but now CrossFit themed
 # ------------------------------
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/CrossFit_Logo_Solid.svg/1200px-CrossFit_Logo_Solid.svg.png", width=100) # Smaller sidebar logo
     st.header("About CrossFit Form Analysis", anchor=False) # anchor=False to remove streamlit warning
     st.write("""
     Improve your CrossFit workouts with AI-powered form analysis. Upload a video of your workout and receive personalized feedback to enhance your technique, prevent injuries, and maximize your performance.
