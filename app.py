@@ -19,10 +19,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# ------------------------------
-# Utility Functions for Background (REMOVED)
-# ------------------------------
-# Background and custom CSS are being significantly simplified for clarity.
 
 # ------------------------------
 # Retrieve API keys from secrets
@@ -135,6 +131,10 @@ if 'show_audio_options' not in st.session_state:
 # Main UI - Streamlined Landing and Video Analysis - CrossFit focused
 # ------------------------------
 st.write(" ") # Adding some whitespace
+
+# Hero Section Image - Added here
+st.image("image_fx_ (19).jpg", use_column_width=True) # Hero Image
+
 st.write("Upload a video of your CrossFit workout to get started.") # More direct instruction
 
 video_file = st.file_uploader(
