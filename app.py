@@ -19,6 +19,23 @@ st.set_page_config(
     layout="wide"
 )
 
+
+# ------------------------------
+# Retrieve API keys from secrets
+# ------------------------------
+API_KEY_GOOGLE = st.secrets["google"]["api_key"]
+API_KEY_ELEVENLABS = st.secrets.get("elevenlabs", {}).get("api_key", None)
+
+# ------------------------------
+# Configure Google Generative AI
+# ------------------------------
+if API_KEY_GOOGLE:
+    os.environ["GOOGLE_API_KEY"] = API_KEY_GOOGLE
+    genai.configure(api_key=API_KEY_GOOGLE)
+else:
+    st.error("Google API Key not found. Please set the GOOGLE_API_KEY in Streamlit secrets.")
+    st.stop()
+
 # ------------------------------
 # Utility Functions for Background
 # ------------------------------
@@ -46,21 +63,21 @@ def set_background(png_file):
         margin-top: 20px;
         color: black; /* Set text color in analysis section to black */
     }}
-    .stButton button {
+    .stButton button {{
         background-color: #e67e22; /*  button color */
         color: white;
-    }
-    .stDownloadButton button {
+    }}
+    .stDownloadButton button {{
         background-color: #4CAF50; /* Example: Green for download */
         color: white;
-    }
+    }}
 
     /* Centralize elements for cleaner look on larger screens */
-    .stFileUploader, .stTextArea, .stButton, .stDownloadButton, .stAudio, .stVideo {
+    .stFileUploader, .stTextArea, .stButton, .stDownloadButton, .stAudio, .stVideo {{
         max-width: 800px; /* Adjust as needed */
         margin-left: auto;
         margin-right: auto;
-    }
+    }}
     h1, h2, h3, h4, h5, h6 {{
         color: white; /* Ensure headers are white for contrast */
     }}
@@ -74,25 +91,9 @@ if os.path.exists(background_image):
     set_background(background_image)
 
 # ------------------------------
-# Retrieve API keys from secrets
+# Header - Using custom image instead of logo
 # ------------------------------
-API_KEY_GOOGLE = st.secrets["google"]["api_key"]
-API_KEY_ELEVENLABS = st.secrets.get("elevenlabs", {}).get("api_key", None)
-
-# ------------------------------
-# Configure Google Generative AI
-# ------------------------------
-if API_KEY_GOOGLE:
-    os.environ["GOOGLE_API_KEY"] = API_KEY_GOOGLE
-    genai.configure(api_key=API_KEY_GOOGLE)
-else:
-    st.error("Google API Key not found. Please set the GOOGLE_API_KEY in Streamlit secrets.")
-    st.stop()
-
-
-# ------------------------------
-# Header - No image in header, background image handles visual
-# ------------------------------
+st.image("image_fx_ (19).jpg", width=250)  # Using the custom image instead of CrossFit logo
 st.title("Exercise Form Analyzer")
 st.markdown("Get expert AI feedback on your exercise technique.") # Clear subtitle as CTA
 
