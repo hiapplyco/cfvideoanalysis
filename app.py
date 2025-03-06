@@ -341,7 +341,3 @@ else:
     st.markdown("---") # Divider for visual separation
 
     st.write("**Good form is key to safe and effective workouts.**") # Motivational quote - generic exercise themed
-content_copy
-download
-Use code with caution.
-Python
