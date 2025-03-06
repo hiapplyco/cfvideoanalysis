@@ -14,8 +14,8 @@ import base64
 
 # Set page configuration
 st.set_page_config(
-    page_title="CrossFit Form Analyzer - Get Workout Feedback",
-    page_icon="🏋️",
+    page_title="Exercise Form Analyzer - Get Workout Feedback",
+    page_icon="💪",
     layout="wide"
 )
 
@@ -48,12 +48,12 @@ st.markdown("""
     .analysis-section {
         padding: 20px;
         border-radius: 10px;
-        border-left: 5px solid #e67e22; /* CrossFit orange accent */
+        border-left: 5px solid #e67e22; /*  accent color */
         margin-top: 20px;
         background-color: #f9f9f9; /* Light background for analysis */
     }
     .stButton button {
-        background-color: #e67e22; /* CrossFit orange button */
+        background-color: #e67e22; /*  button color */
         color: white;
     }
     .stDownloadButton button {
@@ -74,25 +74,23 @@ st.markdown("""
 # Header - Using custom image instead of logo
 # ------------------------------
 st.image("image_fx_ (19).jpg", width=250)  # Using the custom image instead of CrossFit logo
-st.title("CrossFit Form Analyzer")
-st.markdown("Get expert AI feedback on your CrossFit workout technique.") # Clear subtitle as CTA
+st.title("Exercise Form Analyzer")
+st.markdown("Get expert AI feedback on your exercise technique.") # Clear subtitle as CTA
 
 # ------------------------------
-# Sidebar content - Kept, but now CrossFit themed
+# Sidebar content - Kept, but now generic exercise themed
 # ------------------------------
 with st.sidebar:
-    st.header("About CrossFit Form Analysis", anchor=False) # anchor=False to remove streamlit warning
+    st.header("About Exercise Form Analysis", anchor=False) # anchor=False to remove streamlit warning
     st.write("""
-    Improve your CrossFit workouts with AI-powered form analysis. Upload a video of your workout and receive personalized feedback to enhance your technique, prevent injuries, and maximize your performance.
+    Improve your exercise form with AI-powered analysis. Upload a video of your workout and receive personalized feedback to enhance your technique, prevent injuries, and maximize your performance.
 
-    Get insights on your squats, cleans, snatches, and more!
+    Get insights on various exercises, from weightlifting to bodyweight movements!
     """)
 
-    st.subheader("Connect with a Coach", anchor=False) # Example Contact info - adapt as needed
+    st.subheader("Connect with a Fitness Professional", anchor=False) # Example Contact info - adapt as needed
     st.write("""
-    **Find a CrossFit Affiliate**: [CrossFit Affiliate Finder](https://map.crossfit.com/)
-
-    **Learn more about CrossFit**: [CrossFit Official Website](https://www.crossfit.com/)
+    Consider consulting a certified personal trainer or fitness coach for personalized guidance.
     """)
 
 # ------------------------------
@@ -102,7 +100,7 @@ with st.sidebar:
 def initialize_agent():
     """Initialize and cache the Phi Agent with Gemini model."""
     return Agent(
-        name="CrossFit Form Analyzer",
+        name="Exercise Form Analyzer",
         model=Gemini(id="gemini-2.0-flash-exp"),
         tools=[DuckDuckGo()],
         markdown=True,
@@ -127,16 +125,16 @@ if 'show_audio_options' not in st.session_state:
     st.session_state.show_audio_options = False
 
 # ------------------------------
-# Main UI - Streamlined Landing and Video Analysis - CrossFit focused
+# Main UI - Streamlined Landing and Video Analysis - generic exercise focused
 # ------------------------------
 st.write(" ") # Adding some whitespace
 
-st.write("Upload a video of your CrossFit workout to get started.") # More direct instruction
+st.write("Upload a video of your exercise to get started.") # More direct instruction
 
 video_file = st.file_uploader(
-    "Upload CrossFit Workout Video", # Clearer label - CrossFit specific
+    "Upload Exercise Video", # Clearer label - generic exercise specific
     type=['mp4', 'mov', 'avi'],
-    help="Upload a video of your CrossFit workout for form analysis." # Help text updated
+    help="Upload a video of your exercise for form analysis." # Help text updated
 )
 
 if video_file:
@@ -147,18 +145,18 @@ if video_file:
     st.video(video_path, format="video/mp4", start_time=0)
 
     user_query = st.text_area(
-        "What aspect of your CrossFit form would you like analyzed?", # More user-focused question - CrossFit specific
-        placeholder="e.g., 'Analyze my squat form', 'How's my snatch technique?', 'Check my push-up form'", # Placeholders updated
+        "What aspect of your exercise form would you like analyzed?", # More user-focused question - generic exercise specific
+        placeholder="e.g., 'Analyze my squat form', 'How's my bicep curl technique?', 'Check my plank form'", # Placeholders updated
         height=80 # Reduced height for text area
     )
-    analyze_button = st.button("Analyze My Form") # Stronger CTA button text - CrossFit specific
+    analyze_button = st.button("Analyze My Form") # Stronger CTA button text - generic exercise specific
 
     if analyze_button:
         if not user_query:
             st.warning("Please enter a question about your form to analyze the video.") # Warning updated
         else:
             try:
-                with st.spinner("Analyzing video and generating CrossFit form feedback..."): # Spinner text updated
+                with st.spinner("Analyzing video and generating exercise form feedback..."): # Spinner text updated
                     progress_bar = st.progress(0)
                     progress_bar.progress(10, text="Uploading...")
                     processed_video = upload_file(video_path)
@@ -173,37 +171,37 @@ if video_file:
 
                     progress_bar.progress(60, text="Analyzing Form...") # Progress text updated
 
-                    analysis_prompt = f"""You are a highly experienced CrossFit Level 3 coach, known for your keen eye for detail and ability to break down complex movements. You are providing form analysis on a CrossFit workout video.  Analyze this video and address: {user_query}
+                    analysis_prompt = f"""You are a highly experienced fitness coach, known for your keen eye for detail and ability to break down complex movements for various fitness disciplines. You are providing form analysis on a workout video. Analyze this video and address: {user_query}
 
-Your analysis should be structured to provide clear, actionable feedback to help athletes improve their technique, prevent injury, and increase workout efficiency.
+Your analysis should be structured to provide clear, actionable feedback to help individuals improve their technique, prevent injury, and increase workout effectiveness across different exercise types (weightlifting, calisthenics, bodybuilding, functional fitness, etc.).
 
-Focus on common CrossFit movement standards and biomechanics.
+Focus on common exercise movement standards and biomechanics relevant to the exercise shown in the video.
 
 Structure your feedback rigorously, as follows:
 
 ## SKILL LEVEL & MOVEMENT EFFICIENCY
-Assess the athlete's overall movement proficiency - from beginner to advanced. Comment on their efficiency of movement, fluidity, and understanding of basic CrossFit mechanics. *Example: "Intermediate: Shows understanding of basic movement patterns but some energy leaks are present, especially in transitions."*
+Assess the athlete's overall movement proficiency - from beginner to advanced. Comment on their efficiency of movement, fluidity, and understanding of basic exercise mechanics. *Example: "Intermediate: Shows understanding of basic movement patterns but some energy leaks are present, especially in core stabilization."*
 
 ## KEY STRENGTHS (Highlight 2-3 Areas of Good Form)
 *   Identify elements performed with good technique and efficiency. Include timestamps for easy video review.
-*   Explain *why* these elements are strong and contribute to good CrossFit performance and safety.
+*   Explain *why* these elements are strong and contribute to good exercise performance and safety.
 
 ## AREAS FOR IMPROVEMENT (Prioritize 2-3 Key Corrections)
 *   Pinpoint the most critical form errors that could lead to injury or reduced workout effectiveness. Provide timestamps.
 *   Explain the biomechanical principles being violated and how these errors impact performance and safety.
-*   Describe potential negative consequences if these form issues are not corrected in CrossFit workouts.
+*   Describe potential negative consequences if these form issues are not corrected during exercise.
 
-## DRILLS & SCALING OPTIONS (Recommend 1-2 Targeted Drills/Scaling)
-*   Suggest specific drills or scaling options to address the identified weaknesses and improve technique.
-*   Explain how these drills or scaling adjustments will help the athlete develop better movement patterns and reinforce correct form.
+## DRILLS & MODIFICATIONS (Recommend 1-2 Targeted Drills/Modifications)
+*   Suggest specific drills or modifications to address the identified weaknesses and improve technique.
+*   Explain how these drills or modifications will help the individual develop better movement patterns and reinforce correct form.
 
 ## COACHING CUE (The "Aha!" Moment)
 Provide one key coaching cue or mental focus point that could immediately improve the athlete's understanding and execution of the movement. This should be a concise, memorable cue.
 
-## WORKOUT STRATEGY INSIGHT (Beyond Form)
-Offer a brief insight into how the athlete's current form might impact their workout strategy and overall WOD performance.  *Example: "Improving squat depth will allow for more efficient cycling in higher rep workouts."*
+## TRAINING INSIGHT (Beyond Form)
+Offer a brief insight into how the athlete's current form might impact their training progress and overall fitness goals.  *Example: "Improving squat depth will lead to better glute and quad activation for lower body strength gains."*
 
-Deliver your analysis with the expertise of a seasoned CrossFit coach, providing clear, encouraging, and actionable advice. Use precise CrossFit terminology, but ensure it's understandable for athletes of all levels.  Be direct and honest, but always motivating. Keep your analysis concise and impactful – under 400 words.
+Deliver your analysis with the expertise of a seasoned fitness coach, providing clear, encouraging, and actionable advice. Use precise exercise terminology, but ensure it's understandable for individuals of all fitness levels. Be direct and honest, but always motivating. Keep your analysis concise and impactful – under 400 words.
 """
                     progress_bar.progress(80, text="Generating Form Insights...") # Progress text updated
                     response = multimodal_Agent.run(analysis_prompt, videos=[processed_video])
@@ -225,14 +223,14 @@ Deliver your analysis with the expertise of a seasoned CrossFit coach, providing
     # Analysis Section - Displayed regardless of audio options
     if st.session_state.analysis_result:
         st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
-        st.subheader("CrossFit Form Analysis") # Subheader updated
+        st.subheader("Exercise Form Analysis") # Subheader updated
         st.markdown(st.session_state.analysis_result)
         st.markdown('</div>', unsafe_allow_html=True)
 
         st.download_button(
             label="Download Analysis", # Clearer label
             data=st.session_state.analysis_result,
-            file_name="crossfit_form_analysis.md", # Filename updated
+            file_name="exercise_form_analysis.md", # Filename updated
             mime="text/markdown"
         )
 
@@ -267,11 +265,11 @@ Deliver your analysis with the expertise of a seasoned CrossFit coach, providing
                         try:
                             with st.spinner("Preparing audio script..."): # New spinner for script generation
                                 script_prompt = f"""
-                                Convert the following CrossFit form analysis into a natural, enthusiastic, and encouraging monologue script as if spoken by a seasoned CrossFit coach.
+                                Convert the following exercise form analysis into a natural, enthusiastic, and encouraging monologue script as if spoken by a seasoned fitness coach.
 
-                                Remove all headings, bullet points, timestamps or any special characters.  The script should be plain text and flow naturally when read aloud.  Imagine you are a CrossFit Level 3 coach, speaking directly to your athlete, providing form feedback and motivation.
+                                Remove all headings, bullet points, timestamps or any special characters.  The script should be plain text and flow naturally when read aloud.  Imagine you are a fitness coach, speaking directly to your client, providing form feedback and motivation.
 
-                                Maintain all the technical insights and recommendations from the analysis, but phrase them in a conversational, easy-to-listen manner. Inject energy, enthusiasm, and a positive coaching tone typical of CrossFit.
+                                Maintain all the technical insights and recommendations from the analysis, but phrase them in a conversational, easy-to-listen manner. Inject energy, enthusiasm, and a positive coaching tone typical of fitness instruction.
 
                                 **Analysis to convert:**
                                 ```
@@ -300,7 +298,7 @@ Deliver your analysis with the expertise of a seasoned CrossFit coach, providing
                                 st.download_button(
                                     label="Download Audio Analysis", # Clearer label
                                     data=st.session_state.audio, # Download audio from bytes
-                                    file_name="crossfit_form_analysis_audio.mp3", # Filename updated
+                                    file_name="exercise_form_analysis_audio.mp3", # Filename updated
                                     mime="audio/mp3"
                                 )
                         except Exception as e:
@@ -310,47 +308,51 @@ Deliver your analysis with the expertise of a seasoned CrossFit coach, providing
 
 else:
     st.write("""
-    Welcome to the CrossFit Form Analyzer! Upload a video of your workout to get started.
+    Welcome to the Exercise Form Analyzer! Upload a video of your workout to get started.
     """) # Welcome message updated
-    st.info("🏋️ Upload a CrossFit workout video above to receive expert AI form analysis and personalized feedback.") # Info message as CTA - CrossFit specific
+    st.info("🏋️ Upload an exercise video above to receive expert AI form analysis and personalized feedback.") # Info message as CTA - generic exercise specific
     st.subheader("Tips for Best Form Analysis") # Tips section - updated
-    with st.expander("How to Get the Best CrossFit Form Analysis"): # Expander label updated
+    with st.expander("How to Get the Best Exercise Form Analysis"): # Expander label updated
         st.markdown("""
         1. **Video Quality**: Ensure good lighting and a clear view of your full body during the movement.
         2. **Movement Focus**: Focus the video on a single exercise or movement pattern for targeted feedback.
-        3. **Specific Questions**: Ask targeted questions about specific aspects of your form (e.g., squat depth, bar path, etc.).
+        3. **Specific Questions**: Ask targeted questions about specific aspects of your form (e.g., squat depth, elbow position, etc.).
         4. **Full Reps**: Include a few full repetitions of the movement in your video for comprehensive analysis.
         """)
 
-    st.subheader("Explore CrossFit Movements") # Section header - updated
+    st.subheader("Explore Different Exercise Types") # Section header - updated
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("### Weightlifting") # Sub-subheader for better visual hierarchy - updated
         st.write("""
-        Analyze your Olympic lifts like Cleans, Snatches, Jerks, and improve your power and technique.
+        Analyze your form on lifts like squats, deadlifts, bench press, and overhead press.
         """)
     with col2:
-        st.markdown("### Gymnastics") # Sub-subheader for better visual hierarchy - updated
+        st.markdown("### Bodyweight Training") # Sub-subheader for better visual hierarchy - updated
         st.write("""
-        Get feedback on bodyweight movements like Pull-ups, Push-ups, Handstand Push-ups, and more to refine your form.
+        Get feedback on exercises like push-ups, pull-ups, lunges, planks, and more.
         """)
     with col3:
-        st.markdown("### Monostructural") # Sub-subheader for better visual hierarchy - updated
+        st.markdown("### Functional Fitness") # Sub-subheader for better visual hierarchy - updated
         st.write("""
-        Even seemingly simple movements like Rowing, Running, and Jumping Rope can be optimized for efficiency - let's analyze them!
+        Analyze複合 movements and exercises designed to improve everyday functional strength and movement.
         """)
 
     st.markdown("---") # Divider for visual separation
 
-    st.subheader("Athlete Success Stories") # Testimonials section - could be updated with CrossFit specific testimonials
+    st.subheader("User Success Stories") # Testimonials section - could be updated with generic testimonials
     col1, col2 = st.columns(2)
     with col1:
         st.info("""
-        "The CrossFit Form Analyzer helped me identify a critical flaw in my squat that I never noticed.  My coach was impressed with the AI feedback!" -  [Athlete Name], CrossFit Enthusiast
+        "The Exercise Form Analyzer helped me understand why I wasn't progressing on my squats. The AI feedback was spot on!" -  [User Name], Fitness Enthusiast
         """) # Example testimonial - needs to be updated
     with col2:
         st.info("""
-        "I used to get shoulder pain during Snatches. This app pinpointed my bar path issue, and now I'm lifting pain-free! Amazing!" - [Athlete Name 2], CrossFit Competitor
+        "I was worried about my form doing deadlifts. This app gave me the confidence to lift heavier and safer!" - [User Name 2], Strength Training Beginner
         """) # Example testimonial - needs to be updated
 
-    st.write("**Good form is the foundation of performance.**") # Motivational quote - CrossFit themed
+    st.write("**Good form is key to safe and effective workouts.**") # Motivational quote - generic exercise themed
+content_copy
+download
+Use code with caution.
+Python
