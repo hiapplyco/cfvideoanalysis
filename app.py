@@ -340,17 +340,6 @@ else:
 
     st.markdown("---") # Divider for visual separation
 
-    st.subheader("User Success Stories") # Testimonials section - could be updated with generic testimonials
-    col1, col2 = st.columns(2)
-    with col1:
-        st.info("""
-        "The Exercise Form Analyzer helped me understand why I wasn't progressing on my squats. The AI feedback was spot on!" -  [User Name], Fitness Enthusiast
-        """) # Example testimonial - needs to be updated
-    with col2:
-        st.info("""
-        "I was worried about my form doing deadlifts. This app gave me the confidence to lift heavier and safer!" - [User Name 2], Strength Training Beginner
-        """) # Example testimonial - needs to be updated
-
     st.write("**Good form is key to safe and effective workouts.**") # Motivational quote - generic exercise themed
 content_copy
 download
