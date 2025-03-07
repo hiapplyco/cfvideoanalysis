@@ -19,6 +19,7 @@ st.set_page_config(
     layout="wide"
 )
 
+
 # ------------------------------
 # Retrieve API keys from secrets
 # ------------------------------
@@ -66,7 +67,7 @@ st.markdown("""
         margin-left: auto;
         margin-right: auto;
     }
-    .hero-image { /* Hero image style */
+    .stImage { /* Hero image style - targeting stImage class directly */
         width: 100%;
         max-height: 400px; /* Adjust as needed */
         object-fit: cover;
@@ -79,7 +80,7 @@ st.markdown("""
 # ------------------------------
 # Header - Using custom image as hero section
 # ------------------------------
-st.image("image_fx_ (19).jpg",  use_column_width=True,  clamp=False, output_format='auto', channels="RGB", className="hero-image") # Hero Image at the top
+st.image("image_fx_ (19).jpg",  use_column_width=True,  clamp=False, output_format='auto', channels="RGB") # Hero Image at the top - className removed
 st.title("Exercise Form Analyzer")
 st.markdown("Get expert AI feedback on your exercise technique.") # Clear subtitle as CTA
 
