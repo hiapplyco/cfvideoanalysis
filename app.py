@@ -19,7 +19,6 @@ st.set_page_config(
     layout="wide"
 )
 
-
 # ------------------------------
 # Retrieve API keys from secrets
 # ------------------------------
@@ -37,72 +36,52 @@ else:
     st.stop()
 
 # ------------------------------
-# Utility Functions for Background
+# Basic CSS styling - now much simpler - No background image styling
 # ------------------------------
-def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_background(png_file):
-    bin_str = get_base64_of_bin_file(png_file)
-    page_bg_img = f'''
+st.markdown("""
     <style>
-    .stApp {{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("data:image/png;base64,{bin_str}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: white; /* Set default text color to white for better contrast */
-    }}
-    .content-section {{ /* New container style */
-        background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white container */
+    .stApp {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .analysis-section {
         padding: 20px;
         border-radius: 10px;
-        margin-bottom: 20px;
-    }}
-    .analysis-section {{
-        background-color: rgba(249, 249, 249, 0.85); /* Slightly transparent white for analysis section */
-        padding: 20px;
-        border-radius: 10px;
-        border-left: 5px solid #e67e22; /* Accent color */
+        border-left: 5px solid #e67e22; /*  accent color */
         margin-top: 20px;
-        color: black; /* Set text color in analysis section to black */
-    }}
-    .stButton button, .stDownloadButton button {{
+        background-color: #f9f9f9; /* Light background for analysis */
+    }
+    .stButton button {
         background-color: #e67e22; /*  button color */
         color: white;
-    }}
-    .stDownloadButton button {{
+    }
+    .stDownloadButton button {
         background-color: #4CAF50; /* Example: Green for download */
         color: white;
-    }}
+    }
 
     /* Centralize elements for cleaner look on larger screens */
-    .stFileUploader, .stTextArea, .stButton, .stDownloadButton, .stAudio, .stVideo {{
+    .stFileUploader, .stTextArea, .stButton, .stDownloadButton, .stAudio, .stVideo {
         max-width: 800px; /* Adjust as needed */
         margin-left: auto;
         margin-right: auto;
-    }}
-    h1, h2, h3, h4, h5, h6 {{
-        color: white; /* Ensure headers are white for contrast */
-    }}
+    }
+    .hero-image { /* Hero image style */
+        width: 100%;
+        max-height: 400px; /* Adjust as needed */
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
     </style>
-    '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Set background image if available
-background_image = "image_fx_ (19).jpg"
-if os.path.exists(background_image):
-    set_background(background_image)
+""", unsafe_allow_html=True)
 
 # ------------------------------
-# Header - No image in header, background image handles visual
+# Header - Using custom image as hero section
 # ------------------------------
-st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
+st.image("image_fx_ (19).jpg",  use_column_width=True,  clamp=False, output_format='auto', channels="RGB", className="hero-image") # Hero Image at the top
 st.title("Exercise Form Analyzer")
 st.markdown("Get expert AI feedback on your exercise technique.") # Clear subtitle as CTA
-st.markdown('</div>', unsafe_allow_html=True) # Container ends here
 
 # ------------------------------
 # Sidebar content - Kept, but now generic exercise themed
@@ -156,7 +135,6 @@ if 'show_audio_options' not in st.session_state:
 # ------------------------------
 st.write(" ") # Adding some whitespace
 
-st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
 st.write("Upload a video of your exercise to get started.") # More direct instruction
 
 video_file = st.file_uploader(
@@ -164,7 +142,6 @@ video_file = st.file_uploader(
     type=['mp4', 'mov', 'avi'],
     help="Upload a video of your exercise for form analysis." # Help text updated
 )
-st.markdown('</div>', unsafe_allow_html=True) # Container ends here
 
 
 if video_file:
@@ -174,15 +151,12 @@ if video_file:
 
     st.video(video_path, format="video/mp4", start_time=0)
 
-    st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
     user_query = st.text_area(
         "What aspect of your exercise form would you like analyzed?", # More user-focused question - generic exercise specific
         placeholder="e.g., 'Analyze my squat form', 'How's my bicep curl technique?', 'Check my plank form'", # Placeholders updated
         height=80 # Reduced height for text area
     )
     analyze_button = st.button("Analyze My Form") # Stronger CTA button text - generic exercise specific
-    st.markdown('</div>', unsafe_allow_html=True) # Container ends here
-
 
     if analyze_button:
         if not user_query:
@@ -255,12 +229,11 @@ Deliver your analysis with the expertise of a seasoned fitness coach, providing 
 
     # Analysis Section - Displayed regardless of audio options
     if st.session_state.analysis_result:
-        st.markdown('<div class="content-section analysis-section">', unsafe_allow_html=True) # Container starts here, with analysis-section class
+        st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
         st.subheader("Exercise Form Analysis") # Subheader updated
         st.markdown(st.session_state.analysis_result)
-        st.markdown('</div>', unsafe_allow_html=True) # Container ends here
+        st.markdown('</div>', unsafe_allow_html=True)
 
-        st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
         st.download_button(
             label="Download Analysis", # Clearer label
             data=st.session_state.analysis_result,
@@ -341,7 +314,6 @@ Deliver your analysis with the expertise of a seasoned fitness coach, providing 
                         st.error("ElevenLabs API key needed for audio.")
 
 else:
-    st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
     st.write("""
     Welcome to the Exercise Form Analyzer! Upload a video of your workout to get started.
     """) # Welcome message updated
@@ -376,4 +348,3 @@ else:
     st.markdown("---") # Divider for visual separation
 
     st.write("**Good form is key to safe and effective workouts.**") # Motivational quote - generic exercise themed
-    st.markdown('</div>', unsafe_allow_html=True) # Container ends here
