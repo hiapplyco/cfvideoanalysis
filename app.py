@@ -37,58 +37,45 @@ else:
     st.stop()
 
 # ------------------------------
-# Utility Functions for Background
+# Basic CSS styling - now much simpler - No background image styling
 # ------------------------------
-def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_background(png_file):
-    bin_str = get_base64_of_bin_file(png_file)
-    page_bg_img = f'''
+st.markdown("""
     <style>
-    .stApp {{
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("data:image/png;base64,{bin_str}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: white; /* Set default text color to white for better contrast */
-    }}
-    .analysis-section {{
-        background-color: rgba(249, 249, 249, 0.85); /* Slightly transparent white for analysis section */
+    .stApp {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .analysis-section {
         padding: 20px;
         border-radius: 10px;
-        border-left: 5px solid #e67e22; /* Accent color */
+        border-left: 5px solid #e67e22; /*  accent color */
         margin-top: 20px;
-        color: black; /* Set text color in analysis section to black */
-    }}
-    .stButton button {{
+        background-color: #f9f9f9; /* Light background for analysis */
+    }
+    .stButton button {
         background-color: #e67e22; /*  button color */
         color: white;
-    }}
-    .stDownloadButton button {{
+    }
+    .stDownloadButton button {
         background-color: #4CAF50; /* Example: Green for download */
         color: white;
-    }}
+    }
 
     /* Centralize elements for cleaner look on larger screens */
-    .stFileUploader, .stTextArea, .stButton, .stDownloadButton, .stAudio, .stVideo {{
+    .stFileUploader, .stTextArea, .stButton, .stDownloadButton, .stAudio, .stVideo {
         max-width: 800px; /* Adjust as needed */
         margin-left: auto;
         margin-right: auto;
-    }}
-    h1, h2, h3, h4, h5, h6 {{
-        color: white; /* Ensure headers are white for contrast */
-    }}
+    }
+    .stImage { /* Hero image style - targeting stImage class directly */
+        width: 100%;
+        max-height: 400px; /* Adjust as needed */
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
     </style>
-    '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Set background image if available
-background_image = "image_fx_ (19).jpg"
-if os.path.exists(background_image):
-    set_background(background_image)
+""", unsafe_allow_html=True)
 
 # ------------------------------
 # Header - Using custom image as hero section
