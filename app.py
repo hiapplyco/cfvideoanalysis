@@ -55,6 +55,12 @@ def set_background(png_file):
         background-repeat: no-repeat;
         color: white; /* Set default text color to white for better contrast */
     }}
+    .content-section {{ /* New container style */
+        background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white container */
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }}
     .analysis-section {{
         background-color: rgba(249, 249, 249, 0.85); /* Slightly transparent white for analysis section */
         padding: 20px;
@@ -63,7 +69,7 @@ def set_background(png_file):
         margin-top: 20px;
         color: black; /* Set text color in analysis section to black */
     }}
-    .stButton button {{
+    .stButton button, .stDownloadButton button {{
         background-color: #e67e22; /*  button color */
         color: white;
     }}
@@ -91,11 +97,12 @@ if os.path.exists(background_image):
     set_background(background_image)
 
 # ------------------------------
-# Header - Using custom image instead of logo
+# Header - No image in header, background image handles visual
 # ------------------------------
-st.image("image_fx_ (19).jpg", width=250)  # Using the custom image instead of CrossFit logo
+st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
 st.title("Exercise Form Analyzer")
 st.markdown("Get expert AI feedback on your exercise technique.") # Clear subtitle as CTA
+st.markdown('</div>', unsafe_allow_html=True) # Container ends here
 
 # ------------------------------
 # Sidebar content - Kept, but now generic exercise themed
@@ -149,6 +156,7 @@ if 'show_audio_options' not in st.session_state:
 # ------------------------------
 st.write(" ") # Adding some whitespace
 
+st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
 st.write("Upload a video of your exercise to get started.") # More direct instruction
 
 video_file = st.file_uploader(
@@ -156,6 +164,8 @@ video_file = st.file_uploader(
     type=['mp4', 'mov', 'avi'],
     help="Upload a video of your exercise for form analysis." # Help text updated
 )
+st.markdown('</div>', unsafe_allow_html=True) # Container ends here
+
 
 if video_file:
     with tempfile.NamedTemporaryFile(delete=False, suffix='.mp4') as temp_video:
@@ -164,12 +174,15 @@ if video_file:
 
     st.video(video_path, format="video/mp4", start_time=0)
 
+    st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
     user_query = st.text_area(
         "What aspect of your exercise form would you like analyzed?", # More user-focused question - generic exercise specific
         placeholder="e.g., 'Analyze my squat form', 'How's my bicep curl technique?', 'Check my plank form'", # Placeholders updated
         height=80 # Reduced height for text area
     )
     analyze_button = st.button("Analyze My Form") # Stronger CTA button text - generic exercise specific
+    st.markdown('</div>', unsafe_allow_html=True) # Container ends here
+
 
     if analyze_button:
         if not user_query:
@@ -242,11 +255,12 @@ Deliver your analysis with the expertise of a seasoned fitness coach, providing 
 
     # Analysis Section - Displayed regardless of audio options
     if st.session_state.analysis_result:
-        st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
+        st.markdown('<div class="content-section analysis-section">', unsafe_allow_html=True) # Container starts here, with analysis-section class
         st.subheader("Exercise Form Analysis") # Subheader updated
         st.markdown(st.session_state.analysis_result)
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True) # Container ends here
 
+        st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
         st.download_button(
             label="Download Analysis", # Clearer label
             data=st.session_state.analysis_result,
@@ -327,6 +341,7 @@ Deliver your analysis with the expertise of a seasoned fitness coach, providing 
                         st.error("ElevenLabs API key needed for audio.")
 
 else:
+    st.markdown('<div class="content-section">', unsafe_allow_html=True) # Container starts here
     st.write("""
     Welcome to the Exercise Form Analyzer! Upload a video of your workout to get started.
     """) # Welcome message updated
@@ -361,3 +376,4 @@ else:
     st.markdown("---") # Divider for visual separation
 
     st.write("**Good form is key to safe and effective workouts.**") # Motivational quote - generic exercise themed
+    st.markdown('</div>', unsafe_allow_html=True) # Container ends here
